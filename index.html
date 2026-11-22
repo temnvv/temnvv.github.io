@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>THE " " team — локальные инструменты</title>
+<meta name="description" content="Экосистема локальных инструментов. Приватность, чистота, аналитика без слежки." />
+<meta name="theme-color" content="#000000" />
+
+<!-- Open Graph / превью в соцсетях -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://temnvv.github.io/" />
+<meta property="og:title" content='THE " " team — локальные инструменты' />
+<meta property="og:description" content="Приватность. Чистота. Аналитика без слежки. Экосистема локальных инструментов." />
+<meta property="og:image" content="https://temnvv.github.io/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Favicon: кавычки на чёрном -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='46' font-family='Helvetica,Arial' font-size='44' font-weight='700' fill='%23fff' text-anchor='middle'%3E%22%3C/text%3E%3C/svg%3E" />
+
+<style>
+  :root {
+    --bg: #000000; --bg-elev: #111113; --border: #1f1f23; --border-hover: #2a2a30;
+    --fg: #ffffff; --fg-muted: #8a8a93; --fg-dim: #5a5a63;
+    --radius: 14px; --max: 960px;
+    --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--font);
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; transition: color .2s ease; }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  header {
+    background: #000; height: 100vh; height: 100svh;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 20px 20px 0 20px;
+  }
+  .giant-logo {
+    display: flex; flex-direction: column; align-items: flex-start;
+    color: #fff; font-size: min(18vw, 24vh); font-weight: 700;
+    line-height: 0.8; letter-spacing: -0.04em;
+  }
+  .logo-mid { width: 60vw; display: flex; justify-content: space-between; margin: 1vh 0; }
+  .logo-bot { margin-left: 25vw; }
+
+  .sticky-nav {
+    position: sticky; top: 0; z-index: 100; width: 100%;
+    display: flex; flex-direction: column; align-items: center;
+    padding-bottom: 50px; margin-top: -80px; transition: padding 0.3s ease;
+  }
+  body.is-scrolled .sticky-nav {
+    padding-top: 20px; padding-bottom: 20px;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .scroll-pill {
+    width: 200px; height: 12px; background: #fff; border-radius: 50px;
+    margin-bottom: 25px; cursor: pointer; transition: all 0.3s ease;
+    opacity: 0; transform: translateY(10px); pointer-events: none;
+  }
+  body.is-scrolled .scroll-pill { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .scroll-pill:hover { transform: scaleY(1.3); opacity: 0.8; }
+
+  .nav-links { display: flex; justify-content: space-between; width: 60vw; }
+  .nav-link {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: var(--fg-muted); font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    transition: color 0.2s ease; text-shadow: 0 2px 4px rgba(0,0,0,1);
+  }
+  .nav-link:hover { color: #fff; }
+  .dot {
+    width: 8px; height: 8px; background: rgba(255,255,255,0.4);
+    border-radius: 50%; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,1);
+  }
+  .nav-link:hover .dot { background: #fff; transform: scale(1.5); box-shadow: 0 0 12px #fff; }
+
+  .hero { padding: 80px 0; border-bottom: 1px solid var(--border); }
+  .hero .tag {
+    display: inline-block; font-family: var(--mono); font-size: 12px; color: #fff;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    padding: 4px 10px; border-radius: 999px; margin-bottom: 24px; letter-spacing: 0.04em;
+  }
+  .hero h1 { font-size: clamp(36px, 5vw, 56px); line-height: 1.05; font-weight: 600; margin: 0 0 24px; letter-spacing: -0.02em; }
+  .hero p { font-size: 18px; color: var(--fg-muted); max-width: 640px; margin: 0; }
+
+  section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-family: var(--mono); font-size: 12px; color: var(--fg-dim); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 32px; }
+  h2 { font-size: 28px; font-weight: 600; margin: 0 0 16px; letter-spacing: -0.01em; }
+
+  .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 40px; }
+  .principle { padding: 24px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); transition: border-color .2s ease; }
+  .principle:hover { border-color: var(--border-hover); }
+  .principle .num { font-family: var(--mono); font-size: 12px; color: var(--fg-dim); margin-bottom: 12px; }
+  .principle h3 { font-size: 16px; font-weight: 600; margin: 0 0 8px; }
+  .principle p { font-size: 14px; color: var(--fg-muted); margin: 0; line-height: 1.55; }
+
+  .product { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; transition: border-color .2s ease; }
+  .product:hover { border-color: var(--border-hover); }
+  .product-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .product h2 { margin: 0; }
+  .status {
+    font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 3px 8px; border-radius: 4px; color: #fff;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  }
+  .product > p { color: var(--fg-muted); margin: 0 0 24px; max-width: 640px; }
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px; margin: 24px 0; padding: 24px 0;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .product-grid h4 { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-dim); margin: 0 0 12px; font-weight: 500; }
+  .product-grid ul { list-style: none; padding: 0; margin: 0; }
+  .product-grid li { font-size: 14px; color: var(--fg-muted); padding: 4px 0 4px 16px; position: relative; }
+  .product-grid li::before { content: "—"; position: absolute; left: 0; color: var(--fg-dim); }
+  .product-note { font-size: 13px; color: var(--fg-dim); font-style: italic; margin: 16px 0 24px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; font-family: var(--font); font-size: 14px; font-weight: 500;
+    border-radius: 10px; border: 1px solid var(--border-hover);
+    background: var(--bg-elev); color: var(--fg); cursor: pointer; transition: all .2s ease;
+  }
+  .btn:hover { background: #fff; color: #000; border-color: #fff; }
+  .btn .arrow { transition: transform .2s ease; }
+  .btn:hover .arrow { transform: translateX(2px); }
+
+  footer { padding: 48px 0; color: var(--fg-dim); font-size: 13px; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 768px) {
+    .nav-links { width: 80vw; }
+    .scroll-pill { width: 140px; height: 10px; margin-bottom: 15px; }
+    .sticky-nav { margin-top: -60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="giant-logo">
+    <div class="logo-top">THE</div>
+    <div class="logo-mid"><span>"</span><span>"</span></div>
+    <div class="logo-bot">TEAM</div>
+  </div>
+</header>
+
+<nav class="sticky-nav" id="mainNav">
+  <a href="#" class="scroll-pill" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" title="Наверх"></a>
+  <div class="nav-links">
+    <a href="#principles" class="nav-link"><span class="dot"></span>Принципы</a>
+    <a href="#products" class="nav-link"><span class="dot"></span>Проекты</a>
+    <a href="https://github.com/temnvv" target="_blank" rel="noopener" class="nav-link"><span class="dot"></span>GitHub</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <span class="tag">экосистема локальных инструментов</span>
+      <h1>Мы и есть будущее</h1>
+      <p>Минималистичный хаб для презентации и дистрибуции наших приложений. Никакого визуального шума — только суть.</p>
+    </div>
+  </section>
+
+  <section id="principles">
+    <div class="container">
+      <div class="section-label">01 — Принципы</div>
+      <h2>На чём мы стоим</h2>
+      <div class="principles">
+        <div class="principle"><div class="num">01</div><h3>Приватность</h3><p>Наши программы работают локально. Мы не собираем данные пользователей.</p></div>
+        <div class="principle"><div class="num">02</div><h3>Чистота</h3><p>На сайте только актуальные проекты. Если продукт умирает — мы убираем его.</p></div>
+        <div class="principle"><div class="num">03</div><h3>Аналитика</h3><p>Анализируем популярность без слежки — приватные счётчики и статистика скачиваний.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="products">
+    <div class="container">
+      <div class="section-label">02 — Проекты</div>
+      <article class="product">
+        <div class="product-header">
+          <h2>Писарь</h2>
+          <span class="status">Beta</span>
+        </div>
+        <p>Локальный ИИ-ассистент для ведения заметок и дневников. Работает офлайн — данные не покидают вашу машину.</p>
+        <div class="product-grid">
+          <div><h4>Движок</h4><ul><li>Локальная модель Qwen 14B</li><li>Полностью офлайн</li></ul></div>
+          <div><h4>Требования</h4><ul><li>Видеокарта с 8+ ГБ VRAM</li><li>Скорость зависит от железа</li></ul></div>
+          <div><h4>Возможности</h4><ul><li>История диалога</li><li>Экспорт мыслей в Markdown</li><li>Дневник дня по требованию</li></ul></div>
+        </div>
+        <p class="product-note">Программа сырая, скорость генерации зависит от железа — но ваши данные в безопасности.</p>
+        <a class="btn" href="https://github.com/temnvv/pisar/releases/latest/download/Pisar.exe" download>
+          Скачать для Windows <span class="arrow">→</span>
+        </a>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© THE " " team — локальные инструменты</span>
+    <span>Без трекеров · Без куки · Без слежки</span>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.body.classList.toggle('is-scrolled', window.scrollY > 10);
+  });
+</script>
+
+<!-- Cloudflare Web Analytics: раскомментировать и вставить свой токен, когда будешь готов
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ТВОЙ_ТОКЕН"}'></script>
+-->
+</body>
+</html>
